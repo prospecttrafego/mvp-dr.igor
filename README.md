@@ -83,9 +83,8 @@ Dr.Igor-Export/
 
 ### **Integrações Opcionais**
 
-- **Google Sheets:** Para agendamentos reais
-- **Evolution API:** Para WhatsApp
-- **Webhook:** Para notificações
+- **Google Sheets:** Para agendamentos reais (se não configurado, usa dados mock)
+- **Webhook:** Para notificações de dashboard
 
 ## 🤖 **Sistema Conversacional**
 

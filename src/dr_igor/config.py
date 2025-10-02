@@ -23,8 +23,6 @@ if PYDANTIC_SETTINGS_AVAILABLE:
         openai_api_key: Optional[str] = None
         openai_model: str = "gpt-4o-mini"
         openai_whisper_model: str = "whisper-1"
-        evolution_base_url: Optional[str] = None
-        evolution_api_key: Optional[str] = None
         google_service_account_json: Optional[str] = None
         google_sheet_id: Optional[str] = None
         dashboard_webhook_url: Optional[str] = None
@@ -38,8 +36,6 @@ else:
             self.openai_api_key: Optional[str] = None
             self.openai_model: str = "gpt-4o-mini"
             self.openai_whisper_model: str = "whisper-1"
-            self.evolution_base_url: Optional[str] = None
-            self.evolution_api_key: Optional[str] = None
             self.google_service_account_json: Optional[str] = None
             self.google_sheet_id: Optional[str] = None
             self.dashboard_webhook_url: Optional[str] = None
