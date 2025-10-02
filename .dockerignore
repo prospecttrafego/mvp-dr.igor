@@ -1,0 +1,67 @@
+# Frontend (Vercel) - não necessário no Railway
+app/
+components/
+node_modules/
+.next/
+package.json
+package-lock.json
+next.config.mjs
+tsconfig.json
+tailwind.config.ts
+postcss.config.mjs
+next-env.d.ts
+
+# Git e controle de versão
+.git/
+.github/
+.gitignore
+
+# IDEs e editores
+.vscode/
+.claude/
+.idea/
+
+# Documentação e exemplos
+*.md
+README.md
+DEPLOY_RAILWAY.md
+AGENTS.MD
+porting_base/
+tests/
+docs/
+
+# Python cache e temporários
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Ambientes virtuais
+.venv/
+env/
+venv/
+
+# Arquivos de ambiente (usamos variáveis do Railway)
+.env
+.env.local
+.env.example
+.env.production
+
+# Logs e temporários
+*.log
+logs/
+notes/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+*.swo

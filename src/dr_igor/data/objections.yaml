@@ -1,0 +1,54 @@
+preco:
+  - "\bpre(ç|c)o\b"
+  - "\bvalor\b"
+  - "quanto custa"
+  - "\bcusta\b"
+  - "investimento"
+
+convenio:
+  - "conv[eê]nio"
+  - "plano de sa[úu]de"
+  - "\bplano\b"
+  - "reembolso"
+
+tempo:
+  - "sem tempo"
+  - "agenda cheia"
+  - "agora n[aã]o"
+  - "correria"
+  - "apertado"
+  - "s[oó] mais tarde"
+
+distancia:
+  - "dist[aâ]ncia"
+  - "longe"
+  - "outra cidade"
+  - "deslocamento"
+  - "n[aã]o consigo ir"
+
+medicacao:
+  - "ozempic"
+  - "mounjaro"
+  - "wegovy"
+  - "rem[eé]dio"
+  - "medica[çc][aã]o"
+
+reposicao:
+  - "reposição hormonal"
+  - "reposicao hormonal"
+  - "trt"
+  - "testosterona"
+
+urgencia:
+  - "urgente"
+  - "dor"
+  - "agora"
+  - "imediato"
+  - "socorro"
+
+indecisao:
+  - "preciso pensar"
+  - "depois"
+  - "mais pra frente"
+  - "talvez"
+  - "consultar (fam[ií]lia|c[oô]njuge)"

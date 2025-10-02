@@ -1,0 +1,18 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "functions": {
+    "app/api/chat/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/notes/route.ts": {
+      "maxDuration": 15
+    }
+  },
+  "env": {
+    "API_BASE_URL": "@api_base_url"
+  },
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- ./src/ ./requirements.txt ./Dockerfile || exit 0"
+}

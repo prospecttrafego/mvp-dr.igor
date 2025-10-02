@@ -1,0 +1,502 @@
+{
+  "metadata": {
+    "versao": "1.0.0",
+    "ultima_atualizacao": "2025-09-27",
+    "autor": "Dr. Alex AI-Flow",
+    "descricao": "Base de conhecimento estruturada para sistema RAG do Instituto Aguiar Neri (Dr. Igor Neri)"
+  },
+  "casos_sucesso": [
+    {
+      "id": "CS001",
+      "tipo": "emagrecimento",
+      "perfil": "feminino_35_45",
+      "titulo": "Perda de 18kg em 4 meses",
+      "descricao": "Paciente Maria Silva, 42 anos, empresária de Feira de Santana. Chegou com 92kg e IMC 34 (obesidade grau I). Histórico de múltiplas tentativas frustradas com dietas restritivas.",
+      "protocolo": "Abordagem multifatorial com ajuste metabólico progressivo, reeducação alimentar comportamental e suplementação personalizada baseada em exames.",
+      "resultados": {
+        "peso_inicial": "92kg",
+        "peso_final": "74kg",
+        "tempo": "4 meses",
+        "perda_total": "18kg",
+        "perda_gordura": "15kg",
+        "preservacao_muscular": "95%",
+        "bioimpedancia_inicial": "42% gordura",
+        "bioimpedancia_final": "28% gordura"
+      },
+      "depoimento": "Depois de anos tentando emagrecer, finalmente encontrei um método que funciona de verdade. O Dr. Igor Neri não me deu apenas uma dieta, ele mudou minha relação com a comida.",
+      "tags": ["emagrecimento", "obesidade", "sucesso", "feminino", "40+"],
+      "relevancia_score": 0.95
+    },
+    {
+      "id": "CS002",
+      "tipo": "emagrecimento",
+      "perfil": "masculino_25_35",
+      "titulo": "De 110kg para 85kg em 5 meses",
+      "descricao": "João Carlos, 32 anos, engenheiro. Sedentário, trabalho de escritório, alimentação desregulada. Pré-diabetes e esteatose hepática.",
+      "protocolo": "Protocolo de reversão metabólica com foco em resistência insulínica, introdução gradual de atividade física e uso estratégico de peptídeos.",
+      "resultados": {
+        "peso_inicial": "110kg",
+        "peso_final": "85kg",
+        "tempo": "5 meses",
+        "perda_total": "25kg",
+        "glicemia_inicial": "118mg/dl",
+        "glicemia_final": "85mg/dl",
+        "reversao_esteatose": "completa"
+      },
+      "depoimento": "Não só emagreci como revereti meu pré-diabetes. O acompanhamento próximo fez toda diferença.",
+      "tags": ["emagrecimento", "diabetes", "masculino", "30+", "sedentario"],
+      "relevancia_score": 0.92
+    },
+    {
+      "id": "CS003",
+      "tipo": "definicao",
+      "perfil": "feminino_25_35",
+      "titulo": "Definição muscular e redução de 8% gordura",
+      "descricao": "Ana Paula, 28 anos, professora de educação física. Já praticante de atividade física mas com dificuldade em definição abdominal.",
+      "protocolo": "Protocolo de recomposição corporal com ciclagem de carboidratos, timing nutricional específico e biomodulação hormonal natural.",
+      "resultados": {
+        "gordura_inicial": "24%",
+        "gordura_final": "16%",
+        "massa_magra": "+2kg",
+        "circunferencia_abdominal": "-12cm",
+        "definicao_visivel": "6 semanas"
+      },
+      "depoimento": "Finalmente consegui o abdômen definido que sempre quis, sem perder massa muscular.",
+      "tags": ["definicao", "fitness", "feminino", "atleta"],
+      "relevancia_score": 0.88
+    },
+    {
+      "id": "CS004",
+      "tipo": "reposicao_hormonal",
+      "perfil": "masculino_45_55",
+      "titulo": "Recuperação de vitalidade com TRT",
+      "descricao": "Roberto Mendes, 52 anos, médico. Queixas de fadiga crônica, perda de libido, dificuldade em manter massa muscular.",
+      "protocolo": "Terapia de reposição hormonal bioidentica com monitoramento trimestral, ajuste de micronutrientes e modulação do eixo hormonal.",
+      "resultados": {
+        "testosterona_inicial": "220ng/dl",
+        "testosterona_final": "750ng/dl",
+        "energia": "aumento 80%",
+        "libido": "normalizada",
+        "massa_muscular": "+4kg",
+        "gordura_corporal": "-6kg"
+      },
+      "depoimento": "Voltei a ter energia dos 30 anos. A abordagem segura e monitorada me deu confiança.",
+      "tags": ["trt", "reposicao", "masculino", "50+", "fadiga"],
+      "relevancia_score": 0.90
+    },
+    {
+      "id": "CS005",
+      "tipo": "pos_bariatrica",
+      "perfil": "feminino_35_45",
+      "titulo": "Manutenção pós-bariátrica bem-sucedida",
+      "descricao": "Claudia Santos, 38 anos. Realizou bariátrica há 2 anos e teve reganho de 15kg.",
+      "protocolo": "Protocolo específico pós-bariátrica com suplementação adequada, controle de compulsão e ajuste metabólico.",
+      "resultados": {
+        "perda_reganho": "15kg em 3 meses",
+        "estabilizacao": "8 meses mantendo",
+        "compulsao": "controlada",
+        "deficiencias": "corrigidas"
+      },
+      "depoimento": "O Dr. Igor Neri entendeu as particularidades pós-bariátrica. Consegui voltar ao peso ideal e manter.",
+      "tags": ["bariatrica", "reganho", "feminino", "manutencao"],
+      "relevancia_score": 0.85
+    },
+    {
+      "id": "CS006",
+      "tipo": "online",
+      "perfil": "feminino_30_40",
+      "titulo": "Sucesso no atendimento 100% online",
+      "descricao": "Patricia Lima, 35 anos, de São Paulo. Impossibilitada de vir presencialmente.",
+      "protocolo": "Acompanhamento online com protocolos adaptados, uso de aplicativo para monitoramento e consultas quinzenais por vídeo.",
+      "resultados": {
+        "perda_peso": "12kg em 3 meses",
+        "adesao": "95%",
+        "satisfacao": "10/10",
+        "consultas_realizadas": "8 online"
+      },
+      "depoimento": "Mesmo à distância, o acompanhamento foi impecável. Tecnologia facilitou tudo.",
+      "tags": ["online", "distancia", "sucesso", "tecnologia"],
+      "relevancia_score": 0.87
+    }
+  ],
+  "protocolos_tratamento": [
+    {
+      "id": "PT001",
+      "nome": "Protocolo Emagrecimento Sustentável",
+      "indicacao": "Pacientes com IMC > 25, sem comorbidades graves",
+      "duracao": "3-6 meses",
+      "fases": [
+        {
+          "fase": 1,
+          "nome": "Adaptação Metabólica",
+          "duracao": "2-3 semanas",
+          "objetivos": "Preparar metabolismo, reduzir inflamação, estabilizar glicemia",
+          "estrategias": [
+            "Dieta anti-inflamatória",
+            "Jejum intermitente progressivo",
+            "Suplementação básica"
+          ]
+        },
+        {
+          "fase": 2,
+          "nome": "Perda Ativa",
+          "duracao": "8-12 semanas",
+          "objetivos": "Máxima perda de gordura preservando massa magra",
+          "estrategias": [
+            "Déficit calórico calculado",
+            "Ciclagem de macronutrientes",
+            "Exercício resistido + aeróbico"
+          ]
+        },
+        {
+          "fase": 3,
+          "nome": "Consolidação",
+          "duracao": "4-6 semanas",
+          "objetivos": "Estabilizar novo peso, evitar efeito platô",
+          "estrategias": [
+            "Reverse diet progressiva",
+            "Ajuste hormonal",
+            "Educação comportamental"
+          ]
+        }
+      ],
+      "resultados_esperados": {
+        "perda_peso": "0.5-1.5kg/semana",
+        "perda_gordura": "80-90% do peso perdido",
+        "preservacao_muscular": ">90%",
+        "melhora_exames": "30-60 dias"
+      },
+      "contraindicacoes": ["Gestação", "Insuficiência renal grave", "Transtornos alimentares não tratados"]
+    },
+    {
+      "id": "PT002",
+      "nome": "Protocolo Recomposição Corporal",
+      "indicacao": "Pacientes eutróficos buscando definição muscular",
+      "duracao": "2-4 meses",
+      "estrategias": [
+        "Periodização nutricional",
+        "Timing de nutrientes pré/pós treino",
+        "Suplementação ergogênica",
+        "Bioimpedância quinzenal"
+      ],
+      "resultados_esperados": {
+        "reducao_gordura": "4-8%",
+        "ganho_muscular": "1-3kg",
+        "definicao_visivel": "6-8 semanas"
+      }
+    },
+    {
+      "id": "PT003",
+      "nome": "Protocolo TRT Seguro",
+      "indicacao": "Homens >35 anos com hipogonadismo confirmado",
+      "duracao": "Contínuo com reavaliações trimestrais",
+      "exames_necessarios": [
+        "Testosterona total e livre",
+        "LH, FSH",
+        "Estradiol",
+        "PSA",
+        "Hemograma completo",
+        "Perfil lipídico"
+      ],
+      "monitoramento": "Trimestral com ajustes de dose",
+      "resultados_esperados": {
+        "normalizacao_testosterona": "4-6 semanas",
+        "melhora_sintomas": "6-12 semanas",
+        "ganho_muscular": "3-6 meses"
+      }
+    },
+    {
+      "id": "PT004",
+      "nome": "Protocolo Medicamentoso Assistido",
+      "indicacao": "Pacientes com indicação médica para GLP-1 agonistas",
+      "medicamentos": ["Ozempic", "Mounjaro", "Wegovy"],
+      "duracao": "6-12 meses com desmame progressivo",
+      "monitoramento": [
+        "Função pancreática",
+        "Função tireoidiana",
+        "Efeitos colaterais GI",
+        "Perda de massa magra"
+      ],
+      "estrategia_combinada": [
+        "Proteína elevada (1.6-2g/kg)",
+        "Exercício resistido obrigatório",
+        "Suplementação para preservação muscular",
+        "Transição pós-medicamento planejada"
+      ]
+    }
+  ],
+  "faq_medico": [
+    {
+      "id": "FAQ001",
+      "pergunta": "Quanto tempo leva para ver resultados?",
+      "resposta": "Os primeiros resultados são visíveis em 15 dias, com mudanças significativas entre 30-45 dias. A bioimpedância mostra alterações na composição corporal desde a segunda semana.",
+      "categoria": "resultados",
+      "frequencia": "muito_alta"
+    },
+    {
+      "id": "FAQ002",
+      "pergunta": "Preciso fazer exames antes da consulta?",
+      "resposta": "Não é obrigatório para a primeira consulta. O Dr. Igor Neri solicitará exames específicos baseados em sua avaliação inicial. Se tiver exames recentes (menos de 6 meses), traga-os.",
+      "categoria": "exames",
+      "frequencia": "alta"
+    },
+    {
+      "id": "FAQ003",
+      "pergunta": "O tratamento usa Ozempic/Mounjaro?",
+      "resposta": "Quando há indicação médica, sim. O Dr. Igor Neri é especializado no uso seguro desses medicamentos, sempre combinados com mudança de estilo de vida para resultados sustentáveis.",
+      "categoria": "medicamentos",
+      "frequencia": "muito_alta"
+    },
+    {
+      "id": "FAQ004",
+      "pergunta": "Qual a diferença da bioimpedância?",
+      "resposta": "A bioimpedância oferece análise precisa da composição corporal: percentual de gordura, massa muscular, água corporal e taxa metabólica. É fundamental para personalizar o tratamento.",
+      "categoria": "exames",
+      "frequencia": "media"
+    },
+    {
+      "id": "FAQ005",
+      "pergunta": "Atende por convênio?",
+      "resposta": "O Instituto trabalha exclusivamente com atendimento particular para garantir tempo adequado de consulta e acompanhamento personalizado. Fornecemos recibo para reembolso quando aplicável.",
+      "categoria": "pagamento",
+      "frequencia": "alta"
+    },
+    {
+      "id": "FAQ006",
+      "pergunta": "Como funciona o atendimento online?",
+      "resposta": "Consultas por vídeo com mesma duração e qualidade do presencial. Você recebe prescrições digitais, tem acesso a suporte por WhatsApp e acompanhamento regular. Única diferença é a bioimpedância que é substituída por outras métricas.",
+      "categoria": "online",
+      "frequencia": "media"
+    },
+    {
+      "id": "FAQ007",
+      "pergunta": "Posso parcelar o pagamento?",
+      "resposta": "Sim, aceitamos cartão de crédito com parcelamento em até 3x sem juros ou PIX com 5% de desconto à vista.",
+      "categoria": "pagamento",
+      "frequencia": "alta"
+    },
+    {
+      "id": "FAQ008",
+      "pergunta": "Tenho diabetes, posso fazer o tratamento?",
+      "resposta": "Sim, inclusive é uma especialidade do Dr. Igor Neri. Muitos pacientes conseguem reduzir medicações e até reverter pré-diabetes com o protocolo adequado.",
+      "categoria": "comorbidades",
+      "frequencia": "media"
+    },
+    {
+      "id": "FAQ009",
+      "pergunta": "E se eu não conseguir seguir a dieta?",
+      "resposta": "O método não é baseado em dietas restritivas. Trabalhamos com reeducação alimentar, flexibilidade e estratégias comportamentais. O plano é adaptado ao seu estilo de vida.",
+      "categoria": "tratamento",
+      "frequencia": "alta"
+    },
+    {
+      "id": "FAQ010",
+      "pergunta": "Vou ter que tomar muitos remédios?",
+      "resposta": "O tratamento prioriza mudanças de estilo de vida. Medicamentos são usados apenas quando necessário e sempre com objetivo de desmame futuro. Suplementação é personalizada baseada em exames.",
+      "categoria": "medicamentos",
+      "frequencia": "media"
+    }
+  ],
+  "diferenciais_clinica": [
+    {
+      "id": "DIF001",
+      "titulo": "Pós-graduação em Ciências da Obesidade",
+      "descricao": "Dr. Igor Neri possui especialização específica em obesidade pela Associação Brasileira para Estudo da Obesidade e Síndrome Metabólica (ABESO)",
+      "impacto": "Tratamentos baseados nas mais recentes evidências científicas",
+      "prova_social": "Mais de 3.000 pacientes atendidos com sucesso"
+    },
+    {
+      "id": "DIF002",
+      "titulo": "Abordagem Integrativa 360°",
+      "descricao": "Não tratamos apenas o peso, mas todos os fatores: metabolismo, hormônios, comportamento, sono, estresse e inflamação",
+      "impacto": "Resultados sustentáveis e melhora global da saúde",
+      "prova_social": "85% dos pacientes mantém resultados após 1 ano"
+    },
+    {
+      "id": "DIF003",
+      "titulo": "Tecnologia de Ponta",
+      "descricao": "Bioimpedância InBody, aplicativo de acompanhamento, prescrição digital e telemedicina integrada",
+      "impacto": "Monitoramento preciso e acompanhamento facilitado",
+      "prova_social": "Nota 4.9/5 em satisfação tecnológica"
+    },
+    {
+      "id": "DIF004",
+      "titulo": "Experiência com Casos Complexos",
+      "descricao": "Especialista em obesidade resistente, pós-bariátrica, síndrome metabólica e uso de GLP-1 agonistas",
+      "impacto": "Capacidade de tratar casos que outros profissionais não conseguem",
+      "prova_social": "Referência regional em casos complexos"
+    },
+    {
+      "id": "DIF005",
+      "titulo": "Acompanhamento Próximo Incluído",
+      "descricao": "Retorno em 30 dias incluído, suporte por WhatsApp e ajustes de protocolo sem custo adicional no primeiro mês",
+      "impacto": "Maior adesão ao tratamento e resolução rápida de dúvidas",
+      "prova_social": "95% de adesão ao tratamento completo"
+    }
+  ],
+  "objecoes_respostas": [
+    {
+      "id": "OBJ001",
+      "objecao": "R$ 700 é muito caro",
+      "resposta": "Entendo sua preocupação com o investimento. Considerando que inclui consulta completa, bioimpedância (exame que custa R$ 150-200 isoladamente) e retorno em 30 dias, o valor representa menos de R$ 12 por dia de acompanhamento. Muitos pacientes economizam mais que isso em medicamentos desnecessários e tentativas frustradas.",
+      "gatilho": "Quanto você já investiu em tratamentos que não funcionaram?",
+      "categoria": "preco"
+    },
+    {
+      "id": "OBJ002",
+      "objecao": "Preciso pensar melhor",
+      "resposta": "Compreendo perfeitamente. É uma decisão importante para sua saúde. Posso enviar algumas informações sobre casos de sucesso similares ao seu? Quanto tempo você imagina precisar para decidir?",
+      "gatilho": "Cada mês adiado é um mês a menos aproveitando os resultados",
+      "categoria": "indecisao"
+    },
+    {
+      "id": "OBJ003",
+      "objecao": "Já tentei de tudo e não funciona",
+      "resposta": "Essa frustração é mais comum do que imagina. 70% dos nossos pacientes chegam exatamente assim. A diferença está na abordagem personalizada baseada em exames e no tratamento da causa, não apenas dos sintomas. Posso compartilhar o caso da Maria, que tinha o mesmo histórico?",
+      "gatilho": "O que te faz pensar que dessa vez pode ser diferente?",
+      "categoria": "frustração"
+    },
+    {
+      "id": "OBJ004",
+      "objecao": "Moro longe, não posso ir presencialmente",
+      "resposta": "Temos pacientes de todo Brasil com excelentes resultados online. A única diferença é a bioimpedância, que compensamos com outras métricas. Inclusive, a Patricia de São Paulo perdeu 12kg em 3 meses 100% online. Prefere começar online e depois avaliar uma visita presencial?",
+      "gatilho": "A distância não pode ser uma barreira para sua saúde",
+      "categoria": "distancia"
+    },
+    {
+      "id": "OBJ005",
+      "objecao": "Não tenho tempo para dieta complicada",
+      "resposta": "Ótima observação! Por isso nosso método não usa dietas restritivas ou complicadas. Adaptamos tudo ao seu estilo de vida. Temos executivos, mães com rotina corrida e até médicos plantonistas seguindo o protocolo. O segredo está na simplicidade e praticidade.",
+      "gatilho": "Quanto tempo você perde se sentindo mal com seu corpo?",
+      "categoria": "tempo"
+    },
+    {
+      "id": "OBJ006",
+      "objecao": "Tenho medo de tomar remédios",
+      "resposta": "Compreendo totalmente. Nossa prioridade sempre é o tratamento natural através de mudanças de estilo de vida. Medicamentos são usados apenas quando estritamente necessário, sempre com seu consentimento e com plano de desmame. 60% dos pacientes não precisam de nenhuma medicação.",
+      "gatilho": "Prefere continuar como está ou explorar opções seguras?",
+      "categoria": "medicamentos"
+    }
+  ],
+  "gatilhos_mentais": [
+    {
+      "id": "GM001",
+      "tipo": "escassez",
+      "contexto": "Quando lead demonstra interesse mas não decide",
+      "aplicacao": "Consultando nossa agenda, vejo que temos apenas 3 vagas para os próximos 15 dias. Como você tem urgência em [objetivo do lead], seria importante garantir seu horário.",
+      "cuidado": "Usar apenas quando real, nunca criar falsa escassez"
+    },
+    {
+      "id": "GM002",
+      "tipo": "prova_social",
+      "contexto": "Quando lead questiona eficácia",
+      "aplicacao": "Só este mês já ajudamos 47 pacientes com objetivos similares ao seu. A Maria, por exemplo, com seu mesmo perfil, já perdeu 8kg em 6 semanas.",
+      "cuidado": "Sempre usar casos reais, nunca inventar"
+    },
+    {
+      "id": "GM003",
+      "tipo": "autoridade",
+      "contexto": "Quando lead precisa de confiança",
+      "aplicacao": "O Dr. Igor Neri é referência regional em nutrologia, com pós-graduação específica em obesidade e mais de 10 anos tratando casos complexos que outros profissionais não conseguem resolver.",
+      "cuidado": "Não exagerar, manter tom profissional"
+    },
+    {
+      "id": "GM004",
+      "tipo": "reciprocidade",
+      "contexto": "Lead indeciso mas engajado",
+      "aplicacao": "Vou fazer o seguinte: vou reservar informalmente um horário para você por 24h e enviar agora mesmo nosso guia de preparação para consulta. Assim você já começa a se beneficiar.",
+      "cuidado": "Sempre cumprir o prometido"
+    },
+    {
+      "id": "GM005",
+      "tipo": "urgencia",
+      "contexto": "Lead com evento próximo ou meta temporal",
+      "aplicacao": "Com seu evento em [data], temos exatamente [X semanas]. É o tempo ideal para resultados visíveis, mas precisamos começar esta semana.",
+      "cuidado": "Ser realista com prazos"
+    },
+    {
+      "id": "GM006",
+      "tipo": "compromisso_consistencia",
+      "contexto": "Lead que já concordou parcialmente",
+      "aplicacao": "Você mencionou que [problema/desejo do lead]. Se isso é realmente importante para você, o próximo passo lógico seria agendar uma avaliação, concorda?",
+      "cuidado": "Não pressionar, manter tom consultivo"
+    }
+  ],
+  "perfis_personas": [
+    {
+      "id": "PER001",
+      "nome": "Estética Urgente",
+      "caracteristicas": [
+        "Mulher 25-40 anos",
+        "Evento próximo (casamento, formatura, verão)",
+        "Já tem hábitos saudáveis mas quer resultado rápido",
+        "Capacidade financeira média-alta"
+      ],
+      "abordagem": "Foco em prazos, resultados rápidos, casos de sucesso similares",
+      "gatilhos_principais": ["urgencia", "prova_social", "escassez"],
+      "protocolo_sugerido": "PT002 ou PT001 fase acelerada"
+    },
+    {
+      "id": "PER002",
+      "nome": "Saúde Preocupada",
+      "caracteristicas": [
+        "40-60 anos",
+        "Comorbidades (diabetes, hipertensão)",
+        "Já teve problemas de saúde ou histórico familiar",
+        "Busca mudança definitiva"
+      ],
+      "abordagem": "Foco em saúde, reversão de doenças, qualidade de vida",
+      "gatilhos_principais": ["autoridade", "prova_social", "medo"],
+      "protocolo_sugerido": "PT001 completo"
+    },
+    {
+      "id": "PER003",
+      "nome": "Frustrado Crônico",
+      "caracteristicas": [
+        "Múltiplas tentativas fracassadas",
+        "Ceticismo alto",
+        "Possível resistência metabólica",
+        "Precisa de muita confiança"
+      ],
+      "abordagem": "Empatia, casos similares de sucesso, diferencial do método",
+      "gatilhos_principais": ["prova_social", "autoridade", "garantia"],
+      "protocolo_sugerido": "PT001 com acompanhamento intensivo"
+    },
+    {
+      "id": "PER004",
+      "nome": "Executivo Sem Tempo",
+      "caracteristicas": [
+        "30-50 anos",
+        "Rotina intensa",
+        "Valoriza praticidade",
+        "Capacidade financeira alta"
+      ],
+      "abordagem": "Foco em praticidade, resultado sem complicação, status",
+      "gatilhos_principais": ["escassez", "status", "conveniencia"],
+      "protocolo_sugerido": "PT001 adaptado ou PT004"
+    },
+    {
+      "id": "PER005",
+      "nome": "Fitness Evoluído",
+      "caracteristicas": [
+        "Já treina regularmente",
+        "Busca definição ou performance",
+        "Conhecimento intermediário de nutrição",
+        "Quer ir além do básico"
+      ],
+      "abordagem": "Linguagem técnica, foco em composição corporal, biohacking",
+      "gatilhos_principais": ["autoridade", "exclusividade", "resultados"],
+      "protocolo_sugerido": "PT002 ou PT003"
+    }
+  ],
+  "configuracoes_rag": {
+    "embedding_model": "text-embedding-ada-002",
+    "chunk_size": 500,
+    "overlap": 50,
+    "similarity_threshold": 0.75,
+    "max_results": 5,
+    "rerank": true,
+    "cache_ttl": 3600,
+    "update_frequency": "semanal"
+  }
+}

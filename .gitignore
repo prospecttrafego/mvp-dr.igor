@@ -1,0 +1,22 @@
+.DS_Store
+node_modules/
+.env
+__pycache__/
+.venv/
+.env.local
+.env.production
+*.log
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Dependencies
+package-lock.json
+yarn.lock
+
+# IDE
+.vscode/
+.idea/
