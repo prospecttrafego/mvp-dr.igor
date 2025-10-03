@@ -25,7 +25,7 @@ FIELD_PRIORITY = [
     "objetivo",
     "tratamentos_anteriores",
     "cidade",
-    "preferencia_modalidade",
+    # "preferencia_modalidade" não é mais perguntado proativamente
     "telefone",
 ]
 
@@ -46,7 +46,7 @@ OUTPUT_FIELDS = [
     "objetivo",
     "tempo_problema",
     "tratamentos_anteriores",
-    "preferencia_modalidade",
+    "preferencia_modalidade",  # apenas preenchido se usuário disser explicitamente
 ]
 
 
@@ -216,8 +216,6 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
         # 3. Continuar fluxo normal após histórico
         if not col.get("cidade"):
             return "localizacao"
-        if not col.get("preferencia_modalidade"):
-            return "modalidade"
 
         # 4. Apresentação de valor e agendamento
         # Se o usuário disser que deseja agendar, mas ainda não temos objetivo, pergunte objetivo primeiro.

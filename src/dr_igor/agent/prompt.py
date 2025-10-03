@@ -60,12 +60,8 @@ def _get_adaptive_guidance(intent: str, collected: Dict[str, Optional[str]], sta
             if stage == "historico_direto":
                 return f"EMAGRECIMENTO - HISTÓRICO: 'Perfeito, {nome}! Emagrecimento é nossa especialidade. Se posso perguntar, já buscou algum tratamento para isso anteriormente? Como foi sua experiência?'"
             elif stage == "localizacao":
-                return f"EMAGRECIMENTO - LOCALIZAÇÃO: 'Senhor(a) {nome}, para melhor atendê-lo(a) com seu objetivo de emagrecimento, poderia informar de qual cidade está falando conosco?'"
-            elif stage == "modalidade":
-                if "feira de santana" in cidade.lower():
-                    return f"EMAGRECIMENTO - MODALIDADE PRESENCIAL: 'Excelente, {nome}! Como está em Feira de Santana, recomendo fortemente o atendimento presencial. Realizamos bioimpedância que mostra sua composição corporal exata - percentual de gordura, músculo e água. Isso é fundamental para um plano de emagrecimento eficaz.'"
-                else:
-                    return f"EMAGRECIMENTO - MODALIDADE ONLINE: 'Entendi, {nome}. O Dr. Igor Neri atende online com excelentes resultados em emagrecimento. Fazemos avaliação completa com cálculo detalhado de IMC e anamnese específica para seu biotipo.'"
+                # Assumir presencial por padrão; mencionar online somente se o lead solicitar explicitamente
+                return f"EMAGRECIMENTO - LOCALIZAÇÃO: 'Senhor(a) {nome}, para melhor atendê-lo(a), poderia informar de qual cidade está falando conosco? Nosso atendimento é presencial em Feira de Santana; atendimento online é possível se o(a) senhor(a) preferir explicitamente.'"
             elif stage == "apresentacao_valor":
                 return f"EMAGRECIMENTO - VALOR: 'Senhor(a) {nome}, o Dr. Igor tem mais de 10 anos de experiência e pós-graduação em Ciências da Obesidade. O investimento é R$ 700 (consulta + bioimpedância + retorno em 30 dias). Baseado em evidência científica, não dietas milagrosas.'"
 
@@ -73,7 +69,7 @@ def _get_adaptive_guidance(intent: str, collected: Dict[str, Optional[str]], sta
             if stage == "historico_direto":
                 return f"DEFINIÇÃO - HISTÓRICO: 'Excelente escolha, {nome}! Definição corporal requer abordagem muito específica. Já buscou algum tratamento para isso anteriormente? Como foi sua experiência?'"
             elif stage == "localizacao":
-                return f"DEFINIÇÃO - LOCALIZAÇÃO: 'Senhor(a) {nome}, para melhor orientá-lo(a) sobre definição corporal, poderia informar de qual cidade está falando conosco?'"
+                return f"DEFINIÇÃO - LOCALIZAÇÃO: 'Senhor(a) {nome}, para melhor orientá-lo(a), poderia informar de qual cidade está falando conosco? O atendimento é presencial por padrão; online somente se o(a) senhor(a) preferir.'"
             elif stage == "apresentacao_valor":
                 return f"DEFINIÇÃO - VALOR: 'Senhor(a) {nome}, definição corporal vai além da estética - é saúde. O Dr. Igor trabalha com protocolos específicos para composição corporal. Investimento: R$ 700 (consulta + bioimpedância + retorno).'"
 
