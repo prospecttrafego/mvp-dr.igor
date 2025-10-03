@@ -145,7 +145,7 @@ def build_user_prompt(
     # Obter orientação adaptativa baseada no objetivo
     adaptive_guidance = _get_adaptive_guidance(intent, collected, stage)
 
-    user_prompt = f"""
+    p1 = f"""
 Lead ID: {session_id}
 Nome: {nome or 'não informado'}
 Telefone: {telefone or 'não informado'}
@@ -177,29 +177,7 @@ Regras adicionais:
 - Não ofereça datas/horários até a etapa "agendamento_preliminar".
 - Quando perguntarem sobre preço, responda objetivamente, e em seguida retorne ao próximo passo pendente do fluxo (não finalize).
 - PRIORIZE a orientação adaptativa acima de tudo.
-
-FORMATO DE SAÍDA (OBRIGATÓRIO):
-Responda SOMENTE com um JSON válido, sem texto fora do JSON, com as chaves obrigatórias abaixo. Quando não houver dado confirmado, use null.
-{
-  "resposta": "string",
-  "dados_coletados": {
-    "nome": "string|null",
-    "telefone": "string|null",
-    "cidade": "string|null",
-    "objetivo": "string|null",
-    "tempo_problema": "string|null",
-    "tratamentos_anteriores": "string|null",
-    "preferencia_modalidade": "presencial|online|null"
-  },
-  "tags": {
-    "objetivo_claro": true|false,
-    "capacidade_financeira": "positiva|negativa|indefinida",
-    "tentativas_anteriores": true|false,
-    "busca_medicacao": true|false,
-    "reposicao_hormonal": true|false,
-    "preferencia_online": true|false,
-    "objecao_distancia": true|false
-  }
-}
 """.strip()
+
+    user_prompt = p1
     return user_prompt, knowledge_text, intent, sentiment
