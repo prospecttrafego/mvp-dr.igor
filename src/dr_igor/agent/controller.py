@@ -108,13 +108,19 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
             m = re.search(p, t, flags=re.IGNORECASE)
             if m:
                 return m.group(1).strip(" .!")
-        # Se for apenas 2-4 palavras com iniciais possivelmente maiúsculas, tratar como nome
+        # Se for 1-4 palavras plausíveis, tratar como nome (aceita primeiro nome)
         tokens = t.split()
-        if 1 < len(tokens) <= 4 and all(len(tok) >= 2 for tok in tokens):
+        if 1 <= len(tokens) <= 4 and all(len(tok) >= 2 for tok in tokens):
             # Evitar frases comuns como "quero agendar"
             blacklist = {"quero", "agendar", "consulta", "preco", "preço", "valor"}
-            if not any(tok.lower() in blacklist for tok in tokens):
-                return t.strip(" .!")
+            if any(tok.lower() in blacklist for tok in tokens):
+                return None
+            if len(tokens) == 1:
+                tok = tokens[0]
+                # Aceitar primeiro nome se começar com letra e for capitalizado
+                if not tok[0].isalpha() or not tok[0].isupper():
+                    return None
+            return t.strip(" .!")
         return None
 
     def _extract_city(text: str) -> Optional[str]:
@@ -320,11 +326,15 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
         if not t:
             return False
         tokens = t.split()
-        if len(tokens) < 2 or len(tokens) > 4:
+        if len(tokens) > 4:
             return False
         blacklist = {"quero", "agendar", "consulta", "preco", "preço", "valor", "emagrecimento", "definição", "reposicao", "reposição", "hormonal"}
         if any(tok.lower() in blacklist for tok in tokens):
             return False
+        if len(tokens) == 1:
+            tok = tokens[0]
+            if not tok[0].isalpha() or not tok[0].isupper() or len(tok) < 2:
+                return False
         return True
 
     for key in TRACKED_FIELDS:
