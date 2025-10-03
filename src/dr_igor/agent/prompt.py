@@ -97,7 +97,12 @@ def _get_adaptive_guidance(intent: str, collected: Dict[str, Optional[str]], sta
     # Orientações específicas por etapa sem objetivo definido
     if stage == "acolhimento":
         periodo = "tarde"  # Simplificado para MVP
-        return f"ACOLHIMENTO: SEMPRE use a mensagem padrão exata: 'Boa {periodo}, sou Alice, assistente do Instituto Aguiar Neri. É um prazer recebê-lo(a). Como posso ajudá-lo(a) hoje?' - NÃO antecipe informações sobre a clínica."
+        return (
+            "ACOLHIMENTO: Cumprimente formalmente e PEÇA o nome completo. "
+            f"Exemplo: 'Boa {periodo}, sou Alice, assistente do Instituto Aguiar Neri. "
+            "É um prazer recebê-lo(a). Para melhor atendê-lo(a), poderia me informar seu nome completo?' "
+            "Não antecipe informações da clínica. Faça apenas essa pergunta."
+        )
     elif stage == "descoberta_objetivo":
         return f"DESCOBERTA: 'Senhor(a) {nome}, para que eu possa orientá-lo(a) da melhor forma, poderia me contar qual é seu principal objetivo? Emagrecimento, definição corporal, reposição hormonal?'"
     elif stage == "agendamento_preliminar":
@@ -172,5 +177,29 @@ Regras adicionais:
 - Não ofereça datas/horários até a etapa "agendamento_preliminar".
 - Quando perguntarem sobre preço, responda objetivamente, e em seguida retorne ao próximo passo pendente do fluxo (não finalize).
 - PRIORIZE a orientação adaptativa acima de tudo.
+
+FORMATO DE SAÍDA (OBRIGATÓRIO):
+Responda SOMENTE com um JSON válido, sem texto fora do JSON, com as chaves obrigatórias abaixo. Quando não houver dado confirmado, use null.
+{
+  "resposta": "string",
+  "dados_coletados": {
+    "nome": "string|null",
+    "telefone": "string|null",
+    "cidade": "string|null",
+    "objetivo": "string|null",
+    "tempo_problema": "string|null",
+    "tratamentos_anteriores": "string|null",
+    "preferencia_modalidade": "presencial|online|null"
+  },
+  "tags": {
+    "objetivo_claro": true|false,
+    "capacidade_financeira": "positiva|negativa|indefinida",
+    "tentativas_anteriores": true|false,
+    "busca_medicacao": true|false,
+    "reposicao_hormonal": true|false,
+    "preferencia_online": true|false,
+    "objecao_distancia": true|false
+  }
+}
 """.strip()
     return user_prompt, knowledge_text, intent, sentiment

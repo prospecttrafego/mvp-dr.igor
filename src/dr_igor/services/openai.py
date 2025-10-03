@@ -17,7 +17,7 @@ class OpenAIClient:
         self._settings = get_settings()
         self._client = httpx.AsyncClient(timeout=30.0)
 
-    async def chat(self, messages: list[dict[str, Any]], response_format: str = "json_object", temperature: float = 0.7) -> Dict[str, Any]:
+    async def chat(self, messages: list[dict[str, Any]], response_format: str = "json_object", temperature: float = 0.3) -> Dict[str, Any]:
         if not self._settings.openai_api_key:
             raise RuntimeError("OPENAI_API_KEY não configurada no servidor")
         payload = {

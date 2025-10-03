@@ -4,8 +4,15 @@ from typing import Tuple
 
 
 def enforce_single_question(text: str) -> str:
-    """Trim response to keep only the first question when multiple appear."""
+    """Keep responses focused to one question while allowing short natural phrasing.
+
+    - If there's only one question mark, keep as-is.
+    - If there are multiple questions but the response is short (< ~220 chars), keep as-is (sounds more natural).
+    - Otherwise, trim at the first question mark.
+    """
     if text.count("?") <= 1:
+        return text
+    if len(text) < 220:
         return text
     idx = text.find("?")
     return text[: idx + 1].strip()

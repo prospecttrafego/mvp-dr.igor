@@ -15,7 +15,6 @@ from .agents.compliance_agent import (
 from .prompt import build_system_prompt, build_user_prompt
 from .intent import detect_intent
 from .scoring import compute_score, decide_action
-from .policy import emergency_override
 from ..models.chat import LeadRequest, ChatDecision
 from ..store.session import session_store
 
@@ -236,21 +235,21 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
 
     score, breakdown = compute_score(tags, dados)
     decisao_dict = decide_action(score, tags)
-    override_text = emergency_override(sentiment, tags)
 
-    resposta_texto = override_text or parsed.get("resposta") or "Não foi possível gerar uma resposta."
+    # Sem override de emergência: negócio não contempla esse fluxo
+    resposta_texto = parsed.get("resposta") or "Não foi possível gerar uma resposta."
 
     # Guardrails
     lower_user = payload.mensagem.lower()
     asked_price = any(k in lower_user for k in ["preço", "preco", "valor", "quanto custa", "custa", "investimento"]) or rule_signals.get("preco", False)
     asked_convenio = any(k in lower_user for k in ["convênio", "convenio", "plano", "reembolso"]) or rule_signals.get("convenio", False)
 
-    if not override_text:
-        resposta_texto = enforce_single_question(resposta_texto)
-        # CTA de preço somente quando qualificado e apresentando valor (não quando aguardando confirmação)
-        allow_cta = (score >= 6 and post_stage in ["apresentacao_valor"] and not sess.pending_schedule_confirmation)
-        resposta_texto = ensure_cta(resposta_texto, asked_price, allow_cta)
-        resposta_texto = hide_convenio_if_not_asked(resposta_texto, asked_convenio)
+    # Guardrails (sempre aplicados, sem caminho de override)
+    resposta_texto = enforce_single_question(resposta_texto)
+    # CTA de preço somente quando qualificado e apresentando valor (não quando aguardando confirmação)
+    allow_cta = (score >= 6 and post_stage in ["apresentacao_valor"] and not sess.pending_schedule_confirmation)
+    resposta_texto = ensure_cta(resposta_texto, asked_price, allow_cta)
+    resposta_texto = hide_convenio_if_not_asked(resposta_texto, asked_convenio)
 
     # Split parts
     resposta_texto, parts = split_parts(resposta_texto)

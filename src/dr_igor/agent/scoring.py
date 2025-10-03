@@ -40,8 +40,6 @@ def decide_action(score: int, tags: Dict[str, str | bool]) -> Decision:
     # Regra específica: reposição hormonal com capacidade financeira positiva → transferir para humano
     if tags.get("reposicao_hormonal") and tags.get("capacidade_financeira") == "positiva":
         return {"acao": "transferir_humano", "prioridade": "alta"}
-    if tags.get("urgencia_expressa"):
-        return {"acao": "escalacao", "prioridade": "alta"}
     if score >= HUMAN_HANDOFF_THRESHOLD:
         return {"acao": "transferir_humano", "prioridade": "alta"}
     if score >= PRE_APPOINTMENT_THRESHOLD:
