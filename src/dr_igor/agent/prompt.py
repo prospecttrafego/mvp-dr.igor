@@ -45,7 +45,7 @@ def build_system_prompt() -> str:
     return load_system_prompt()
 
 
-def _get_adaptive_guidance(intent: str, collected: Dict[str, Optional[str]], stage: str | None) -> str:
+def _get_adaptive_guidance(intent: str, collected: Dict[str, Optional[str]], stage: str | None, pending_field: str | None, reask_count: int) -> str:
     """Gera orientações adaptativas baseadas no objetivo detectado e contexto."""
     nome = collected.get("nome", "")
     objetivo = collected.get("objetivo", "")
@@ -97,12 +97,20 @@ def _get_adaptive_guidance(intent: str, collected: Dict[str, Optional[str]], sta
     # Orientações específicas por etapa sem objetivo definido
     if stage == "acolhimento":
         periodo = "tarde"  # Simplificado para MVP
-        return (
-            "ACOLHIMENTO: Cumprimente formalmente e PEÇA o nome completo. "
+        base = (
+            "ACOLHIMENTO: Cumprimente formalmente e PEÇA o nome (apenas o primeiro e último nome, se possível). "
             f"Exemplo: 'Boa {periodo}, sou Alice, assistente do Instituto Aguiar Neri. "
-            "É um prazer recebê-lo(a). Para melhor atendê-lo(a), poderia me informar seu nome completo?' "
+            "É um prazer recebê-lo(a). Para melhor atendê-lo(a), poderia me informar seu nome?' "
             "Não antecipe informações da clínica. Faça apenas essa pergunta."
         )
+        if pending_field == "nome" and reask_count >= 1:
+            return (
+                base
+                + "\nREPERGUNTA VARIADA: reformule sem repetir literalmente. Exemplos: "
+                  "'Senhor(a), para seguirmos com seu atendimento, preciso do seu nome.' / "
+                  "'Entendi seu ponto, mas poderia me informar seu nome, por gentileza?'"
+            )
+        return base
     elif stage == "descoberta_objetivo":
         return f"DESCOBERTA: 'Senhor(a) {nome}, para que eu possa orientá-lo(a) da melhor forma, poderia me contar qual é seu principal objetivo? Emagrecimento, definição corporal, reposição hormonal?'"
     elif stage == "agendamento_preliminar":
@@ -121,6 +129,7 @@ def build_user_prompt(
     collected: Dict[str, Optional[str]] | None = None,
     pending_field: str | None = None,
     stage: str | None = None,
+    reask_count: int = 0,
 ) -> tuple[str, str, str, str]:
     intent = detect_intent(message)
     sentiment = detect_sentiment(message)
@@ -143,7 +152,7 @@ def build_user_prompt(
         pending_block = "- nenhum campo prioritário definido"
 
     # Obter orientação adaptativa baseada no objetivo
-    adaptive_guidance = _get_adaptive_guidance(intent, collected, stage)
+    adaptive_guidance = _get_adaptive_guidance(intent, collected, stage, pending_field, reask_count)
 
     p1 = f"""
 Lead ID: {session_id}
@@ -173,10 +182,13 @@ Campo prioritário (pergunte somente isso agora):
 Regras adicionais:
 - Faça no máximo uma pergunta por resposta.
 - Se a pergunta prioritária ainda não foi respondida, repergunte somente ela.
+- Se precisar reperguntar, reformule de forma natural e contextual (não repita literalmente a mesma frase).
 - Não antecipe a próxima etapa enquanto a atual estiver sem resposta clara.
 - Não ofereça datas/horários até a etapa "agendamento_preliminar".
 - Quando perguntarem sobre preço, responda objetivamente, e em seguida retorne ao próximo passo pendente do fluxo (não finalize).
 - PRIORIZE a orientação adaptativa acima de tudo.
+
+Observação: Se o lead disser apenas que deseja agendar, confirme o interesse e pergunte de forma objetiva qual é o objetivo principal da consulta (ex.: emagrecimento, definição corporal, reposição hormonal). Em seguida, continue o fluxo normal.
 """.strip()
 
     user_prompt = p1

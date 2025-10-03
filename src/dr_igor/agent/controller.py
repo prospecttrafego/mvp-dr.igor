@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from typing import Any, Dict, List, Optional, Tuple
+import re
 
 from .agents.intent_agent import get_intent_agent
 from .agents.schedule_agent import suggest_slots, build_prompt_append
@@ -93,6 +94,59 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
         if normalized:
             collected[field] = normalized
 
+    # Heurísticas leves para extrair dados quando o usuário responde fora de ordem
+    msg = (payload.mensagem or "").strip()
+
+    def _extract_name(text: str) -> Optional[str]:
+        t = text.strip()
+        patterns = [
+            r"\bmeu nome e\s+([\w\sÁÂÃÉÍÓÔÕÚÇáâãéíóôõúç.'-]{2,})",
+            r"\bme chamo\s+([\w\sÁÂÃÉÍÓÔÕÚÇáâãéíóôõúç.'-]{2,})",
+            r"^sou\s+([\w\sÁÂÃÉÍÓÔÕÚÇáâãéíóôõúç.'-]{2,})",
+        ]
+        for p in patterns:
+            m = re.search(p, t, flags=re.IGNORECASE)
+            if m:
+                return m.group(1).strip(" .!")
+        # Se for apenas 2-4 palavras com iniciais possivelmente maiúsculas, tratar como nome
+        tokens = t.split()
+        if 1 < len(tokens) <= 4 and all(len(tok) >= 2 for tok in tokens):
+            # Evitar frases comuns como "quero agendar"
+            blacklist = {"quero", "agendar", "consulta", "preco", "preço", "valor"}
+            if not any(tok.lower() in blacklist for tok in tokens):
+                return t.strip(" .!")
+        return None
+
+    def _extract_city(text: str) -> Optional[str]:
+        m = re.search(r"\bsou de\s+([\w\sÁÂÃÉÍÓÔÕÚÇáâãéíóôõúç.'-]{2,})", text, flags=re.IGNORECASE)
+        if m:
+            return m.group(1).strip(" .!")
+        return None
+
+    def _extract_preference(text: str) -> Optional[str]:
+        if re.search(r"\bonline\b", text, flags=re.IGNORECASE):
+            return "online"
+        if re.search(r"\bpresencial\b", text, flags=re.IGNORECASE):
+            return "presencial"
+        if re.search(r"prefir[oa].*online", text, flags=re.IGNORECASE):
+            return "online"
+        if re.search(r"prefir[oa].*presencial", text, flags=re.IGNORECASE):
+            return "presencial"
+        return None
+
+    if not collected.get("nome"):
+        nm = _extract_name(msg)
+        if nm:
+            collected["nome"] = nm
+    if not collected.get("cidade"):
+        ct = _extract_city(msg)
+        if ct:
+            collected["cidade"] = ct
+    if not collected.get("preferencia_modalidade"):
+        pref = _extract_preference(msg)
+        if pref:
+            collected["preferencia_modalidade"] = pref
+
     if sess.pending_field and collected.get(sess.pending_field):
         sess.pending_field = None
 
@@ -166,7 +220,10 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
             return "modalidade"
 
         # 4. Apresentação de valor e agendamento
+        # Se o usuário disser que deseja agendar, mas ainda não temos objetivo, pergunte objetivo primeiro.
         if _has_schedule_intent(msg):
+            if not col.get("objetivo"):
+                return "descoberta_objetivo"
             return "agendamento_preliminar"
         return "apresentacao_valor"
 
@@ -174,6 +231,11 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
     sess.stage = pre_stage
 
     # Montar prompt do usuário + RAG
+    # Contagem de re-perguntas para variar a formulação
+    if sess.pending_field:
+        sess.reask_counts[sess.pending_field] = sess.reask_counts.get(sess.pending_field, 0)
+    prev_pending = sess.pending_field
+
     user_prompt, _, intent, sentiment = build_user_prompt(
         payload.mensagem,
         session_id=payload.session_id,
@@ -184,6 +246,7 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
         collected=collected,
         pending_field=sess.pending_field,
         stage=pre_stage,
+        reask_count=sess.reask_counts.get(sess.pending_field or "", 0),
     )
 
     # Agenda: Só anexar 2 slots quando a etapa for de agendamento
@@ -224,6 +287,13 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
 
     if sess.pending_field is None:
         sess.pending_field = _first_missing_field(sess.collected_data)
+
+    # Atualizar contagem de re-perguntas
+    if sess.pending_field:
+        if prev_pending == sess.pending_field:
+            sess.reask_counts[sess.pending_field] = sess.reask_counts.get(sess.pending_field, 0) + 1
+        else:
+            sess.reask_counts[sess.pending_field] = 0
 
     # Recomputar etapa após extrair novos dados
     post_stage = _compute_stage(sess.collected_data, payload.mensagem)

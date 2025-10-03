@@ -19,6 +19,7 @@ class Session:
     stage: Optional[str] = None
     pending_schedule_confirmation: bool = False
     offered_slots: Optional[List[Dict[str, str]]] = field(default_factory=list)
+    reask_counts: Dict[str, int] = field(default_factory=dict)
 
 class SessionStore:
     def __init__(self) -> None:
