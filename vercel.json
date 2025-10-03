@@ -12,6 +12,6 @@
     }
   },
   "env": {
-    "API_BASE_URL": "@api_base_url"
+    "API_BASE_URL": "https://mvp-drigor-production-34d8.up.railway.app"
   }
 }
