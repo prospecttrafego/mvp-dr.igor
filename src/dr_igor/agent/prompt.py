@@ -112,7 +112,9 @@ def _get_adaptive_guidance(intent: str, collected: Dict[str, Optional[str]], sta
     elif stage == "agendamento_preliminar":
         return f"AGENDAMENTO: Lead qualificado - ofertar 2 opções de horário específicas (formato dd/MM/yyyy às HHh) e aguardar confirmação. NÃO transferir para humano até escolha ser feita."
 
-    return "Siga o fluxo padrão conforme a etapa atual."
+    return (
+        "Siga o fluxo padrão conforme a etapa atual. Se o lead fizer uma pergunta direta (ex.: onde fica a clínica, informações sobre o Dr. Igor, casos de sucesso), responda em 1–2 frases de forma objetiva e, em seguida, retome o fluxo com uma frase de ligação natural (ex.: 'Perfeito, esclarecendo sua dúvida… e para seguirmos…')."
+    )
 
 
 def build_user_prompt(

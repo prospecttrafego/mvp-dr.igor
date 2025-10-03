@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import re
 
 from .agents.intent_agent import get_intent_agent
-from .agents.schedule_agent import suggest_slots, build_prompt_append
+from .agents.schedule_agent import suggest_slots, build_prompt_append, format_br
 from .agents.response_agent import generate as generate_response
 from .agents.compliance_agent import (
     ensure_cta,
@@ -264,12 +264,68 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
         {"role": "user", "content": user_prompt},
     ]
 
+    # Chamada à LLM com robustez de JSON
     raw = await generate_response(messages)
-    parsed_content = raw.get("parsed_content")
-    parsed = json.loads(parsed_content)
+    parsed_content = raw.get("parsed_content", "")
+    try:
+        parsed = json.loads(parsed_content)
+    except Exception:
+        # Retry curto forçando apenas JSON válido
+        retry_hint = (
+            "ATENÇÃO: responda SOMENTE com um JSON válido contendo as chaves 'resposta', 'dados_coletados'"
+            ", 'tags'. Não inclua texto fora do JSON."
+        )
+        retry_messages: List[Dict[str, Any]] = [
+            *messages,
+            {"role": "system", "content": retry_hint},
+        ]
+        raw = await generate_response(retry_messages)
+        parsed_content = raw.get("parsed_content", "")
+        try:
+            parsed = json.loads(parsed_content)
+        except Exception:
+            # Fallback seguro: formular pergunta do campo pendente de forma natural
+            field_labels = {
+                "nome": "seu nome",
+                "objetivo": "seu principal objetivo",
+                "tratamentos_anteriores": "se já buscou algum tratamento antes e como foi",
+                "cidade": "de qual cidade está falando",
+                "telefone": "um telefone para contato",
+            }
+            ask_label = field_labels.get(sess.pending_field or "objetivo", "o próximo passo")
+            # Variação simples na repergunta
+            re_count = sess.reask_counts.get(sess.pending_field or "", 0)
+            if re_count % 2 == 0:
+                safe_text = f"Agradeço. Para seguirmos com seu atendimento, poderia me informar {ask_label}, por gentileza?"
+            else:
+                safe_text = f"Perfeito. Só preciso confirmar {ask_label} para direcionar corretamente. Poderia me informar?"
+
+            return safe_text, {
+                "parts": None,
+                "score": 0,
+                "breakdown": {"objetivo": 0, "capacidade": 0, "urgencia": 0, "fit": 0},
+                "decisao": ChatDecision(acao="continuar_conversa", prioridade="normal"),
+                "dados": {field: sess.collected_data.get(field) for field in OUTPUT_FIELDS},
+                "tags": {},
+            }
 
     tags = parsed.get("tags", {})
     dados_extraidos = parsed.get("dados_coletados", {})
+
+    # Validação: evitar aceitar "nome" claramente inválido vindo do modelo
+    def _is_likely_name(text: Optional[str]) -> bool:
+        if not text or not isinstance(text, str):
+            return False
+        t = text.strip().strip(".!?")
+        if not t:
+            return False
+        tokens = t.split()
+        if len(tokens) < 2 or len(tokens) > 4:
+            return False
+        blacklist = {"quero", "agendar", "consulta", "preco", "preço", "valor", "emagrecimento", "definição", "reposicao", "reposição", "hormonal"}
+        if any(tok.lower() in blacklist for tok in tokens):
+            return False
+        return True
 
     for key in TRACKED_FIELDS:
         value = dados_extraidos.get(key)
@@ -278,7 +334,11 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
         else:
             normalized = value
         if normalized:
-            sess.collected_data[key] = normalized
+            # Se for o campo nome vindo da LLM, validar antes de aceitar
+            if key == "nome" and not _is_likely_name(normalized):
+                pass
+            else:
+                sess.collected_data[key] = normalized
 
     if sess.pending_field and sess.collected_data.get(sess.pending_field):
         sess.pending_field = None
@@ -321,6 +381,17 @@ async def run(payload: LeadRequest) -> Tuple[str, Dict[str, Any]]:
 
     # Split parts
     resposta_texto, parts = split_parts(resposta_texto)
+
+    # Se estamos em etapa de agendamento e a resposta não listou as 2 opções, injetar opções
+    if sess.offered_slots and post_stage in ["agendamento_preliminar", "aguardando_confirmacao_horario"]:
+        formatted = [format_br(s.get("Data", ""), s.get("Horario_Inicio", "")) for s in (sess.offered_slots or [])]
+        if formatted and not any(fmt in resposta_texto for fmt in formatted):
+            lines = "\n".join(f"- {fmt}" for fmt in formatted[:2])
+            resposta_texto = (
+                resposta_texto.rstrip()
+                + "\n\nOpções de horário (escolha uma):\n"
+                + lines
+            )
 
     # Salvar histórico
     if parts:

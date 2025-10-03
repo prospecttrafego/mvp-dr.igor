@@ -264,7 +264,7 @@
     {
       "id": "FAQ006",
       "pergunta": "Como funciona o atendimento online?",
-      "resposta": "Consultas por vídeo com mesma duração e qualidade do presencial. Você recebe prescrições digitais, tem acesso a suporte por WhatsApp e acompanhamento regular. Única diferença é a bioimpedância que é substituída por outras métricas.",
+      "resposta": "Consultas por vídeo com mesma duração e qualidade do presencial. Você recebe prescrições digitais, tem acesso a suporte por WhatsApp e acompanhamento regular. No atendimento online não realizamos bioimpedância; utilizamos cálculo de IMC e uma avaliação completa.",
       "categoria": "online",
       "frequencia": "media"
     },
