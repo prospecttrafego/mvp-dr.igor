@@ -11,12 +11,13 @@ settings = get_settings()
 
 app = FastAPI(title="Dr Igor Conversational Service", version="0.1.0")
 
+# CORS: por padrão, permitir qualquer origem sem credenciais, ou usar REGEX configurável
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"]
-    ,
+    allow_origins=["*"] if not settings.allow_origin_regex else [],
+    allow_origin_regex=settings.allow_origin_regex if settings.allow_origin_regex else None,
+    allow_credentials=False,
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 

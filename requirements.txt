@@ -5,4 +5,3 @@ pydantic>=2.6
 pydantic-settings>=2.4
 PyYAML>=6.0
 python-dotenv>=1.0
-orjson>=3.10

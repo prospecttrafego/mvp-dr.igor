@@ -7,7 +7,7 @@
 }
 
 body {
-  @apply bg-slate-950 text-slate-100;
+  /* Herdar esquema de cores do layout; evitar forçar tema escuro aqui */
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
