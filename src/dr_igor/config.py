@@ -21,7 +21,7 @@ if PYDANTIC_SETTINGS_AVAILABLE:
         model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
         openai_api_key: Optional[str] = None
-        openai_model: str = "gpt-4o-mini"
+        openai_model: str = "gpt-4o"
         openai_whisper_model: str = "whisper-1"
         google_service_account_json: Optional[str] = None
         google_sheet_id: Optional[str] = None
@@ -34,7 +34,7 @@ else:
         def __init__(self, **kwargs):
             # Defaults para todos os campos
             self.openai_api_key: Optional[str] = None
-            self.openai_model: str = "gpt-4o-mini"
+            self.openai_model: str = "gpt-4o"
             self.openai_whisper_model: str = "whisper-1"
             self.google_service_account_json: Optional[str] = None
             self.google_sheet_id: Optional[str] = None
